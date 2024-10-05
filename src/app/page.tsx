@@ -45,7 +45,7 @@ export default function Chat() {
 
   const contentMessages = useMemo(
     () => messages.filter((m) => !m.toolInvocations),
-    []
+    [messages]
   );
 
   return (
