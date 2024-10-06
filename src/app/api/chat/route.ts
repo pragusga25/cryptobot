@@ -1,7 +1,20 @@
-import { openai } from '@ai-sdk/openai';
 import { streamText, convertToCoreMessages, tool } from 'ai';
 import { z } from 'zod';
 import nodemailer from 'nodemailer';
+
+import { createVertex } from '@ai-sdk/google-vertex';
+
+const vertex = createVertex({
+  project: process.env.GOOGLE_PROJECT_ID,
+  location: process.env.GOOGLE_REGION ?? 'us-central1',
+  googleAuthOptions: {
+    credentials: JSON.parse(
+      Buffer.from(process.env.GOOGLE_CREDENTIALS ?? '{}', 'base64').toString(
+        'utf-8'
+      )
+    ),
+  },
+});
 
 const getLatestCryptoTools = async (symbol: string) => {
   const response = await fetch(
@@ -52,7 +65,7 @@ export async function POST(req: Request) {
 
   const result = await streamText({
     maxSteps: 5,
-    model: openai('gpt-4o'),
+    model: vertex('gemini-1.5-flash-002'),
     system: `
       You are CryptoBot, a specialized crypto bot. Your knowledge and discussions are strictly limited to cryptocurrency-related topics. If a user asks about anything outside the realm of crypto, politely redirect them back to crypto subjects.
       Maintain a cheerful and relaxed tone in all interactions. Your personality should be upbeat and easygoing, making conversations about crypto feel fun and accessible.
