@@ -5,7 +5,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Send, User, Bot } from 'lucide-react';
 import { useChat } from 'ai/react';
-import { useMemo } from 'react';
 import Markdown from 'react-markdown';
 
 const ChatContent = (message: { content: string; role: string }) => {
@@ -44,12 +43,6 @@ export default function Chat() {
     maxSteps: 5,
   });
 
-  const contentMessages = useMemo(
-    // () => messages.filter((m) => !m.toolInvocations),
-    () => messages,
-    [messages]
-  );
-
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Main content */}
@@ -66,7 +59,7 @@ export default function Chat() {
               content={`Hello! I'm CryptoBot. I can give you the latest price of a cryptocurrency in USD and send that information to your email. Ask me anything about cryptocurrency!`}
               role="assistant"
             />
-            {contentMessages.map((message, index) => (
+            {messages.map((message, index) => (
               <ChatContent
                 key={index + message.content + message.role}
                 {...message}
