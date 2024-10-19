@@ -79,7 +79,7 @@ export async function POST(req: Request) {
         }),
         execute: async ({ symbol }) => {
           const data = await getLatestCryptoTools(symbol);
-          return data;
+          return { data };
         },
       }),
 
@@ -91,8 +91,13 @@ export async function POST(req: Request) {
           htmlBody: z.string().describe('The HTML body of the email'),
         }),
         execute: async ({ to, subject, htmlBody }) => {
-          await sendEmailTool(to, subject, htmlBody);
-          return 'Email sent successfully!';
+          let message = 'Email sent successfully!';
+          try {
+            await sendEmailTool(to, subject, htmlBody);
+          } catch {
+            message = 'Error occurred while sending email';
+          }
+          return { message };
         },
       }),
     },
