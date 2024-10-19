@@ -44,7 +44,8 @@ export default function Chat() {
   });
 
   const contentMessages = useMemo(
-    () => messages.filter((m) => !m.toolInvocations),
+    // () => messages.filter((m) => !m.toolInvocations),
+    () => messages,
     [messages]
   );
 
@@ -61,7 +62,7 @@ export default function Chat() {
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-4">
             <ChatContent
-              content={`Hello! I'm CryptoBot. How can I assist you with cryptocurrency today?`}
+              content={`Hello! I'm CryptoBot. I can give you the latest price of a cryptocurrency in USD and send that information to your email. Ask me anything about cryptocurrency!`}
               role="assistant"
             />
             {contentMessages.map((message, index) => (
@@ -79,7 +80,7 @@ export default function Chat() {
             <Input
               value={input}
               onChange={handleInputChange}
-              placeholder="Ask about cryptocurrency..."
+              placeholder="Please send the latest price of Bitcoin in USD to myemail@example.com"
               className="flex-1"
               aria-label="Message input"
             />
