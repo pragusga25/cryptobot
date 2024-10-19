@@ -16,9 +16,12 @@ const vertex = createVertex({
   },
 });
 
-const getLatestCryptoTools = async (symbol: string) => {
+const getLatestCryptoTools = async (
+  symbol: string,
+  convert: string = 'USD'
+) => {
   const response = await fetch(
-    `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?symbol=${symbol}&amount=1&convert=USD`,
+    `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=${symbol}&convert=${convert}`,
     {
       headers: {
         'X-CMC_PRO_API_KEY': `${process.env.COINMARKETCAP_API_KEY}`,

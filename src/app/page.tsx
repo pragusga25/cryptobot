@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Send, User, Bot } from 'lucide-react';
 import { useChat } from 'ai/react';
 import { useMemo } from 'react';
+import Markdown from 'react-markdown';
 
 const ChatContent = (message: { content: string; role: string }) => {
   return (
@@ -31,7 +32,7 @@ const ChatContent = (message: { content: string; role: string }) => {
           role="log"
           aria-live="polite"
         >
-          {message.content}
+          <Markdown>{message.content}</Markdown>
         </div>
       </div>
     </div>
